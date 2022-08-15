@@ -9,3 +9,5 @@ const getById = async () => {
   const [rows] = await connection.execute('SELECT * FROM StoreManager.products WHERE id = ?;', [id],);
   return rows;
 };
+
+module.exports = { getAll, getById };
