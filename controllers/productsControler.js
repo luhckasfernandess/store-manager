@@ -1,4 +1,4 @@
-const productService = require('../services/productService');
+const productService = require('../services/productsService');
 
 const ERROR_MESSAGE = 'Server error';
 
