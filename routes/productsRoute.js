@@ -7,3 +7,5 @@ const productsRoute = express.Router();
 productsRoute.get('/', productsControler.getAll);
 
 productsRoute.get('/:id', productsControler.getById);
+
+module.exports = productsRoute;
