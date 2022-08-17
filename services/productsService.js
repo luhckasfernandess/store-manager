@@ -1,3 +1,4 @@
+const { productNotFound } = require('../middlewares/validations');
 const productsModel = require('../models/productsModel');
 
 const getAll = async () => {
@@ -7,6 +8,7 @@ const getAll = async () => {
 
 const getById = async (id) => {
   const product = await productsModel.getById(id);
+  productNotFound(product);
   return product[0];
 };
 
