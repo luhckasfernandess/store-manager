@@ -7,10 +7,9 @@ const getAll = async () => {
 };
 
 const getById = async (id) => {
-  const product = await productsModel.getById(id);
-  console.log(product);
+  const [product] = await productsModel.getById(id);
   if (!product) throw new ProductNotFound(404, 'Product not found');
-  return product[0];
+  return product;
 };
 
 module.exports = { getAll, getById };

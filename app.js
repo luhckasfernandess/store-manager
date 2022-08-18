@@ -1,6 +1,6 @@
 const express = require('express');
 require('express-async-errors');
-const errorMiddleware = require('./middlewares/error.middleware');
+const errorMiddleware = require('./middlewares/errorMiddleware');
 
 const productsRoute = require('./routes/productsRoute');
 

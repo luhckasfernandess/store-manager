@@ -1,7 +1,6 @@
 const { expect } = require('chai');
 const { describe } = require('mocha');
 const Sinon = require('sinon');
-const connection = require('../../../models/connection');
 
 const productsModel = require('../../../models/productsModel');
 const productsService = require('../../../services/productsService');
