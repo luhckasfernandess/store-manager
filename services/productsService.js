@@ -1,3 +1,4 @@
+const ProductNotFound = require('../errors/ProductNotFound');
 const productsModel = require('../models/productsModel');
 
 const getAll = async () => {
@@ -7,6 +8,8 @@ const getAll = async () => {
 
 const getById = async (id) => {
   const product = await productsModel.getById(id);
+  console.log(product);
+  if (!product) throw new ProductNotFound(404, 'Product not found');
   return product[0];
 };
 
