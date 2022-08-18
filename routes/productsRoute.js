@@ -1,8 +1,8 @@
 const express = require('express');
 
-const productsControler = require('../controllers/productsControler');
-
 const productsRoute = express.Router();
+
+const productsControler = require('../controllers/productsControler');
 
 productsRoute.get('/', productsControler.getAll);
 
