@@ -12,13 +12,13 @@ const getById = async (id) => {
   return product;
 };
 
-const create = async (name) => {
+const register = async (name) => {
   if (name === undefined) throw new CustomerError(400, '"name" is required');
   if (name.length < 5) {
     throw new CustomerError(422, '"name" length must be at least 5 characters long');
   }
-  const newProduct = await productsModel.create(name);
+  const newProduct = await productsModel.register(name);
   return newProduct;
 };
 
-module.exports = { getAll, getById, create };
+module.exports = { getAll, getById, register };

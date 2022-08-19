@@ -6,7 +6,7 @@ const connection = require('../../../models/connection');
 const productsModel = require('../../../models/productsModel');
 
 describe('Test Models Layer', () => {
-  describe('/products route', () => {
+  describe('Get All Products', () => {
     before(() => {
       Sinon.stub(connection, 'execute').resolves([[
         {
@@ -35,7 +35,7 @@ describe('Test Models Layer', () => {
       expect(result.length).to.be.equal(3);
     });
   });
-  describe('/products/:id route', () => {
+  describe('Get By Id Product', () => {
     before(() => {
       Sinon.stub(connection, 'execute').resolves([[
         {
@@ -53,6 +53,27 @@ describe('Test Models Layer', () => {
           "id": 1,
           "name": "Martelo de Thor"
         }]);
+    });
+  });
+  describe('Register New Product', () => {
+    before(() => {
+      Sinon.stub(connection, 'execute').resolves([{
+        fieldCount: 0,
+        affectedRows: 1,
+        insertId: 4,
+        info: '',
+        serverStatus: 2,
+        warningStatus: 0,
+      }]);
+    });
+    after(() => {
+      connection.execute.restore();
+    });
+    it('Tests if all products are returned', async () => {
+      const name = 'Product X';
+      const result = await productsModel.register(name);
+      const newProduct = { id: 4, name };
+      expect(result).to.be.deep.equal(newProduct);
     });
   });
 });
