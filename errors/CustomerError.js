@@ -1,8 +1,8 @@
-class ProductNotFound extends Error {
+class CustomerError extends Error {
   constructor(status, message) {
     super(message);
     this.status = status;
   }
 }
 
-module.exports = ProductNotFound;
+module.exports = CustomerError;
