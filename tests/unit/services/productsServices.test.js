@@ -1,4 +1,5 @@
 const { expect } = require('chai');
+const { assert } = require('joi');
 const { describe } = require('mocha');
 const Sinon = require('sinon');
 
@@ -6,7 +7,7 @@ const productsModel = require('../../../models/productsModel');
 const productsService = require('../../../services/productsService');
 
 describe('Test Services Layer', () => {
-  describe('/products route', () => {
+  describe('Method Get All Products', () => {
     before(() => {
       Sinon.stub(productsModel, 'getAll').resolves([[
         {
@@ -35,7 +36,7 @@ describe('Test Services Layer', () => {
       expect(result[0].length).to.be.equal(3);
     });
   });
-  describe('/products/:id route', () => {
+  describe('Method Get By Id Product', () => {
     before(() => {
       Sinon.stub(productsModel, 'getById').resolves([[
         {
@@ -50,6 +51,35 @@ describe('Test Services Layer', () => {
     it('Tests if it returns only the product with the id of the url', async () => {
       const result = await productsService.getById();
       expect(result.length).to.equal(1);
+    });
+  });
+  describe('Method Register New Product', () => {
+    before(() => {
+      Sinon.stub(productsModel, 'register').resolves({ id: 4, name: 'Product X' });
+    });
+    after(() => {
+      productsModel.register.restore();
+    });
+    it('test if name is required', async () => {
+      try {
+        expect(await productsService.register()).not.to.throw('"name" is required');
+      } catch (error) {
+        // const logError = { status: error.status, message: error.message };
+        expect(error.message).to.be.equal('"name" is required');
+      }
+    });
+    it('tests if the name has at least 5 characters', async () => {
+      try {
+        const name = 'Prod'
+        expect(await productsService.register(name)).not.to.throw('"name" length must be at least 5 characters long');
+      } catch (error) {
+        expect(error.message).to.be.equal('"name" length must be at least 5 characters long');
+      }
+    });
+    it('tests if it returns an object with the registered product', async () => {
+      const name = 'Product X';
+      const result = await productsService.register(name);
+      expect(result).to.be.deep.equal({ id: 4, name: 'Product X' });
     });
   });
 });

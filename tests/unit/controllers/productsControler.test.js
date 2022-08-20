@@ -23,6 +23,9 @@ const testController = async (controller) => {
   const request = {
     params: {
       id: 1,
+    },
+    body: {
+      name: 'Product X',
     }
   };
   await controller(request, response);
@@ -87,6 +90,25 @@ describe('Test Controler Layer', () => {
       expect(result.json).to.be.deep.equal({
         "id": 1,
         "name": "Martelo de Thor"
+      });
+    });
+  });
+  describe('Register New Product Method', () => {
+    before(() => {
+      Sinon.stub(productsService, 'register').resolves({ id: 4, name: 'Product X' });
+    });
+    after(() => {
+      productsService.register.restore();
+    });
+    it('Tests if it returns the status is 201', async () => {
+      const result = await testController(productsControler.register);
+      expect(result.status).to.be.equal(201);
+    });
+    it('Tests if it returns an object with the registered product', async () => {
+      const result = await testController(productsControler.register);
+      expect(result.json).to.be.deep.equal({
+        "id": 4,
+        "name": "Product X"
       });
     });
   });
