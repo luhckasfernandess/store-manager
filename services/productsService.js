@@ -32,4 +32,11 @@ const updateById = async (id, name) => {
   return updatedProduct;
 };
 
-module.exports = { getAll, getById, register, updateById };
+const deleteById = async (id) => {
+  const [product] = await productsModel.getById(id);
+  if (!product) throw new CustomerError(404, 'Product not found');
+  const deleteResult = await productsModel.deleteById(id);
+  return deleteResult;
+};
+
+module.exports = { getAll, getById, register, updateById, deleteById };

@@ -13,4 +13,6 @@ productsRoute.post('/', productsControler.register);
 
 productsRoute.put('/:id', productsControler.updateById);
 
+productsRoute.delete('/:id', productsControler.deleteById);
+
 module.exports = productsRoute;
