@@ -12,13 +12,20 @@ const getById = async (id) => {
   return product;
 };
 
-const register = async (name) => {
+const register = async (name, id) => {
   if (name === undefined) throw new CustomerError(400, '"name" is required');
   if (name.length < 5) {
     throw new CustomerError(422, '"name" length must be at least 5 characters long');
   }
-  const newProduct = await productsModel.register(name);
+  const newProduct = await productsModel.register(name, id);
   return newProduct;
 };
 
-module.exports = { getAll, getById, register };
+const updateById = async (id, name) => {
+  const [product] = await productsModel.getById(id);
+  if (!product) throw new CustomerError(404, 'Product not found');
+  const updatedProduct = await productsModel.updateById(id, name);
+  return updatedProduct;
+};
+
+module.exports = { getAll, getById, register, updateById };

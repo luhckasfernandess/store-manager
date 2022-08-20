@@ -17,4 +17,11 @@ const register = async (req, res) => {
   return res.status(201).json(newProduct);
 };
 
-module.exports = { getAll, getById, register };
+const updateById = async (req, res) => {
+  const { id } = req.params;
+  const { name } = req.body;
+  const updatedProduct = await productsService.updateById(id, name);
+  return res.status(200).json(updatedProduct);
+};
+
+module.exports = { getAll, getById, register, updateById };
